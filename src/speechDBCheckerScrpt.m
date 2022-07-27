@@ -24,7 +24,7 @@ plot(rand(200,2));grid on;
 axH2 = gca;
 %% select directory consisting of files consisting audio or a file
 checkType = {'directory','file'};
-idType = 1; % Please edit this to select a directory or a file
+idType = 2; % Please edit this to select a directory or a file
 switch checkType{idType}
     case 'directory'
         selPath = uigetdir;
@@ -42,9 +42,14 @@ segmentLinMS = 50; % 50ms for level check
 output1 = directoryLevelDistribution(axH1, testPath,segmentLinMS, maxN);
 %% spectral display of silent and voiced samples
 % Please adjus following thresholds by inspecting level distribution
-silentProb = 0.00; % reference level (probability) of silent segment
-voiceProb = 0.9; % reference level (probability) of voiced segment
+silentProb = 0.01; % reference level (probability) of silent segment
+voiceProb = 0.99; % reference level (probability) of voiced segment
 output2 = spectrumDistributionTest(axH2, testPath, segmentLinMS, silentProb, voiceProb, maxN);
-%%
-print(fig1H,'-dpng','-r200', "dstrbtn" + datestr(now,30) + ".png");
-print(fig2H,'-dpng','-r200', "vSlspctrm" + datestr(now,30) + ".png");
+%% save visual image
+dateInfoStr = datestr(now,30);
+print(fig1H,'-dpng','-r200', "dstrbtn" + dateInfoStr + ".png");
+print(fig2H,'-dpng','-r200', "vSlspctrm" + dateInfoStr + ".png");
+%% save editable graphics
+savefig(fig1H, "dstrbtn" + dateInfoStr + ".fig")
+savefig(fig2H, "vSlspctrm" + dateInfoStr + ".fig")
+%% 
